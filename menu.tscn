@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cawgrwanxsvs3"]
+
+[node name="Menu" type="Node2D" unique_id=1213463918]
+
+[node name="UI" type="Control" parent="." unique_id=93497023]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PeliNimi" type="Label" parent="UI" unique_id=1415068613]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 100.0
+offset_right = 800.0
+offset_bottom = 228.0
+text = "Linkin TEK-paita peli"

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dmor0lcel43wb"]
+
+[ext_resource type="Script" uid="uid://8al8xfmw2bbb" path="res://actors/player/player.gd" id="1_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(9, 6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_zone"]
+radius = 18.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1855263933]
+motion_mode = 1
+script = ExtResource("1_player")
+
+[node name="Body" type="Polygon2D" parent="." unique_id=1675188411]
+color = Color(0.25500292, 0.44244006, 0.98927194, 1)
+polygon = PackedVector2Array(-5, -16, 5, -16, 5, -1, -5, -1)
+
+[node name="Head" type="Polygon2D" parent="." unique_id=1297324097]
+color = Color(0.009404905, 0.009691907, 0.0061953026, 1)
+polygon = PackedVector2Array(-4, -22, 4, -22, 4, -15, -4, -15)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Head" unique_id=2019272396]
+offset_left = -8.0
+offset_top = -31.0
+offset_right = 11.0
+offset_bottom = -6.0
+text = ":D"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1003980760]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractZone" type="Area2D" parent="." unique_id=35637390]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractZone" unique_id=2088748282]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_zone")

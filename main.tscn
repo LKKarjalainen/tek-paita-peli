@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://0goofec25jwi"]
+
+[ext_resource type="Script" uid="uid://bamfoa23csfe4" path="res://main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://actors/player/player.tscn" id="2_player"]
+[ext_resource type="Script" uid="uid://1rmvw1mk2gbt" path="res://actors/game_camera.gd" id="3_cam"]
+
+[node name="Main" type="Node" unique_id=8605307]
+script = ExtResource("1_main")
+
+[node name="Letterbox" type="CanvasLayer" parent="." unique_id=738672775]
+layer = -100
+
+[node name="Fill" type="ColorRect" parent="Letterbox" unique_id=640891169]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.0705882, 0.0705882, 0.0862745, 1)
+
+[node name="World" type="Node2D" parent="." unique_id=1576234452]
+
+[node name="Player" parent="." unique_id=459191559 instance=ExtResource("2_player")]
+position = Vector2(88, 250)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=728125460]
+script = ExtResource("3_cam")

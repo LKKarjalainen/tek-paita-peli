@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://r5qbepyngiv6"]
+
+[ext_resource type="Script" uid="uid://dgghlsnv1kjc4" path="res://world/components/room.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://c05isw7oyggcc" path="res://world/components/door.gd" id="2_door"]
+[ext_resource type="Script" uid="uid://dyd43xf8n51ca" path="res://world/components/search_point.gd" id="3_search"]
+[ext_resource type="Texture2D" uid="uid://clgqp3mof5reh" path="res://world/maps/varasto.png" id="4_map"]
+[ext_resource type="PackedScene" path="res://minigames/varasto/varasto.tscn" id="5_mg"]
+
+[sub_resource type="RectangleShape2D" id="door_out"]
+size = Vector2(20, 10)
+
+[sub_resource type="RectangleShape2D" id="spot"]
+
+[node name="Varasto" type="Node2D" unique_id=1277732034]
+script = ExtResource("1_room")
+
+[node name="Map" type="Sprite2D" parent="." unique_id=987104460]
+texture = ExtResource("4_map")
+centered = false
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=1384211072]
+
+[node name="kaytava" type="Marker2D" parent="SpawnPoints" unique_id=1338159195]
+position = Vector2(23, 34)
+
+[node name="Exits" type="Node2D" parent="." unique_id=375290628]
+
+[node name="ToKaytava" type="Area2D" parent="Exits" unique_id=2014057788]
+position = Vector2(23, 1)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_door")
+target_room = "res://world/rooms/kaytava.tscn"
+target_spawn = "varasto"
+prompt = "Käytävään"
+prompt_offset = Vector2(0, 12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exits/ToKaytava" unique_id=776836074]
+shape = SubResource("door_out")
+
+[node name="SearchPoints" type="Node2D" parent="." unique_id=1427917734]
+
+[node name="LinkinVarasto" type="Area2D" parent="SearchPoints" unique_id=1695715968]
+position = Vector2(26, 17)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_search")
+location_id = "varasto"
+lines = Array[String](["Linkin varasto.", "Pakko olla täällä.", "Hyi, haisee vanha viina."])
+searched_lines = Array[String](["Kaivoin tän jo läpi."])
+minigame = ExtResource("5_mg")
+prompt = "Kaivele kasaa"
+prompt_offset = Vector2(0, -14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchPoints/LinkinVarasto" unique_id=1781096093]
+shape = SubResource("spot")

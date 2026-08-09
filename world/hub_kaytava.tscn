@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://byx8bc0n4htyk"]
+
+[ext_resource type="Script" uid="uid://c05isw7oyggcc" path="res://world/components/door.gd" id="1_door"]
+
+[sub_resource type="RectangleShape2D" id="wall_top"]
+size = Vector2(320, 44)
+
+[sub_resource type="RectangleShape2D" id="wall_bottom"]
+size = Vector2(320, 24)
+
+[sub_resource type="RectangleShape2D" id="wall_side"]
+size = Vector2(16, 180)
+
+[sub_resource type="RectangleShape2D" id="door_shape"]
+size = Vector2(30, 20)
+
+[node name="Kaytava" type="Node2D" unique_id=1839755653]
+
+[node name="Floor" type="Polygon2D" parent="." unique_id=902139592]
+color = Color(0.588235, 0.560784, 0.513726, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 180, 0, 180)
+
+[node name="WallTop" type="Polygon2D" parent="." unique_id=2024516541]
+color = Color(0.313726, 0.301961, 0.290196, 1)
+polygon = PackedVector2Array(0, 0, 320, 0, 320, 44, 0, 44)
+
+[node name="WallBottom" type="Polygon2D" parent="." unique_id=644260547]
+color = Color(0.313726, 0.301961, 0.290196, 1)
+polygon = PackedVector2Array(0, 168, 320, 168, 320, 180, 0, 180)
+
+[node name="DoorMarks" type="Node2D" parent="." unique_id=1285192963]
+
+[node name="D1" type="Polygon2D" parent="DoorMarks" unique_id=1578107458]
+color = Color(0.470588, 0.360784, 0.239216, 1)
+polygon = PackedVector2Array(45, 12, 75, 12, 75, 44, 45, 44)
+
+[node name="D2" type="Polygon2D" parent="DoorMarks" unique_id=1629143866]
+color = Color(0.470588, 0.360784, 0.239216, 1)
+polygon = PackedVector2Array(115, 12, 145, 12, 145, 44, 115, 44)
+
+[node name="D3" type="Polygon2D" parent="DoorMarks" unique_id=1134352483]
+color = Color(0.470588, 0.360784, 0.239216, 1)
+polygon = PackedVector2Array(185, 12, 215, 12, 215, 44, 185, 44)
+
+[node name="D4" type="Polygon2D" parent="DoorMarks" unique_id=1112634056]
+color = Color(0.396078, 0.494118, 0.588235, 1)
+polygon = PackedVector2Array(255, 12, 285, 12, 285, 44, 255, 44)
+
+[node name="RoomName" type="Label" parent="." unique_id=1746414448]
+offset_left = 6.0
+offset_top = 170.0
+offset_right = 160.0
+offset_bottom = 180.0
+theme_override_colors/font_color = Color(0.784314, 0.764706, 0.72549, 1)
+theme_override_font_sizes/font_size = 7
+text = "KÄYTÄVÄ"
+
+[node name="Walls" type="StaticBody2D" parent="." unique_id=2051075429]
+collision_mask = 0
+
+[node name="Top" type="CollisionShape2D" parent="Walls" unique_id=731431097]
+position = Vector2(160, 22)
+shape = SubResource("wall_top")
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls" unique_id=88950768]
+position = Vector2(160, 180)
+shape = SubResource("wall_bottom")
+
+[node name="Left" type="CollisionShape2D" parent="Walls" unique_id=927916320]
+position = Vector2(8, 90)
+shape = SubResource("wall_side")
+
+[node name="Right" type="CollisionShape2D" parent="Walls" unique_id=1953725536]
+position = Vector2(312, 90)
+shape = SubResource("wall_side")
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=1500783136]
+
+[node name="start" type="Marker2D" parent="SpawnPoints" unique_id=526148953]
+position = Vector2(160, 120)
+
+[node name="kattila" type="Marker2D" parent="SpawnPoints" unique_id=1755011117]
+position = Vector2(60, 70)
+
+[node name="varasto" type="Marker2D" parent="SpawnPoints" unique_id=1803040663]
+position = Vector2(130, 70)
+
+[node name="aula" type="Marker2D" parent="SpawnPoints" unique_id=744952505]
+position = Vector2(200, 70)
+
+[node name="ulos" type="Marker2D" parent="SpawnPoints" unique_id=967998738]
+position = Vector2(270, 70)
+
+[node name="Exits" type="Node2D" parent="." unique_id=914045108]
+
+[node name="ToKattila" type="Area2D" parent="Exits" unique_id=5186954]
+position = Vector2(60, 46)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_door")
+target_room = "res://world/rooms/kattila.tscn"
+target_spawn = "kaytava"
+prompt = "Kattila"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exits/ToKattila" unique_id=1110190035]
+shape = SubResource("door_shape")
+
+[node name="ToVarasto" type="Area2D" parent="Exits" unique_id=1164061304]
+position = Vector2(130, 46)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_door")
+target_spawn = "kaytava"
+locked_lines = Array[String](["Varasto. Sinne pitää mennä, mutta ei vielä."])
+prompt = "Varasto"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exits/ToVarasto" unique_id=1756219716]
+shape = SubResource("door_shape")
+
+[node name="ToAula" type="Area2D" parent="Exits" unique_id=1604396577]
+position = Vector2(200, 46)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_door")
+target_spawn = "kaytava"
+locked_lines = Array[String](["Aula. Ei nyt."])
+prompt = "Aula"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exits/ToAula" unique_id=66900306]
+shape = SubResource("door_shape")
+
+[node name="ToUlos" type="Area2D" parent="Exits" unique_id=3106930]
+position = Vector2(270, 46)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_door")
+target_spawn = "kaytava"
+locked_lines = Array[String](["Ei tästä lähdetä ennen kuin paita löytyy."])
+prompt = "Ulos"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exits/ToUlos" unique_id=580017373]
+shape = SubResource("door_shape")

@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://b172i0x6nh0da"]
+
+[ext_resource type="Script" uid="uid://dgghlsnv1kjc4" path="res://world/components/room.gd" id="1_room"]
+[ext_resource type="Script" uid="uid://c05isw7oyggcc" path="res://world/components/door.gd" id="2_door"]
+[ext_resource type="Script" uid="uid://dyd43xf8n51ca" path="res://world/components/search_point.gd" id="3_search"]
+[ext_resource type="Texture2D" uid="uid://bjleq1xujfudd" path="res://world/maps/kattila.png" id="4_map"]
+[ext_resource type="PackedScene" path="res://minigames/hallitus_kaappi/hallitus_kaappi.tscn" id="5_mg"]
+[ext_resource type="PackedScene" path="res://minigames/tapsa_kaappi/tapsa_kaappi.tscn" id="6_mg"]
+
+[sub_resource type="RectangleShape2D" id="door_out"]
+size = Vector2(10, 26)
+
+[sub_resource type="RectangleShape2D" id="spot"]
+size = Vector2(22, 22)
+
+[sub_resource type="RectangleShape2D" id="spot_algo"]
+size = Vector2(32, 26)
+
+[node name="Kattila" type="Node2D" unique_id=197871125]
+script = ExtResource("1_room")
+
+[node name="Map" type="Sprite2D" parent="." unique_id=1434059996]
+texture = ExtResource("4_map")
+centered = false
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=1571420974]
+
+[node name="kaytava" type="Marker2D" parent="SpawnPoints" unique_id=19283769]
+position = Vector2(30, 142)
+
+[node name="Exits" type="Node2D" parent="." unique_id=1308850486]
+
+[node name="ToKaytava" type="Area2D" parent="Exits" unique_id=1572319453]
+position = Vector2(2, 142)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_door")
+target_room = "res://world/rooms/kaytava.tscn"
+target_spawn = "kattila"
+prompt = "Käytävään"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exits/ToKaytava" unique_id=455733378]
+shape = SubResource("door_out")
+
+[node name="SearchPoints" type="Node2D" parent="." unique_id=546777756]
+
+[node name="HallitusKaappi" type="Area2D" parent="SearchPoints" unique_id=1994936514]
+position = Vector2(235, 75)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_search")
+location_id = "hallitus_kaappi"
+lines = Array[String](["Hallitukse kaappi.", "Pls ole täällä."])
+searched_lines = Array[String](["Tyhjä. Katsoin jo."])
+minigame = ExtResource("5_mg")
+prompt = "Hallituksen kaappi"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchPoints/HallitusKaappi" unique_id=454359111]
+shape = SubResource("spot")
+
+[node name="TapsaKaappi" type="Area2D" parent="SearchPoints" unique_id=1360979425]
+position = Vector2(156, 135)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_search")
+location_id = "tapsa_kaappi"
+lines = Array[String](["Tapsa kaappi.", "Oiskoha täällä."])
+searched_lines = Array[String](["Katsoin jo. Ei siellä ole mitään."])
+minigame = ExtResource("6_mg")
+prompt = "Tapsan kaappi"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchPoints/TapsaKaappi" unique_id=1547263109]
+shape = SubResource("spot")
+
+[node name="Algo" type="Area2D" parent="SearchPoints" unique_id=335044248]
+position = Vector2(147, 15)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_search")
+location_id = "algo"
+lines = Array[String](["Algolainen nostaa katseen.", "\"Oottex nähny Linkin TEK-paitaa?\"", "\"nope lol\""])
+searched_lines = Array[String](["Kysyin jo. Ei tiedä mitään."])
+prompt = "Kysy Algolta"
+prompt_offset = Vector2(0, 22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SearchPoints/Algo" unique_id=427037582]
+shape = SubResource("spot_algo")
