@@ -25,6 +25,23 @@ godot --headless --import          # reimport and report script/scene errors, no
 godot --check-only -s some.gd      # parse-check one script
 ```
 
+## Exporting
+
+Export templates for **4.6.3.stable** are installed in `~/.local/share/godot/export_templates/`. They must match the engine version exactly — after a Godot upgrade, re-download the matching `.tpz` from the `godot-builds` releases and unpack `templates/` into a folder named after the new version.
+
+```sh
+godot --headless --export-release "Linux" build/linux/linkin-tek-paita-peli.x86_64
+godot --headless --export-release "Web"   build/web/index.html
+cd build/web && python3 -m http.server 8099   # then open localhost:8099
+```
+
+`build/` is gitignored. Two preset details worth not undoing:
+
+- **Linux** sets `binary_format/embed_pck=true`, so the export is one self-contained ~68 MB executable rather than a binary plus a `.pck`.
+- **Web** sets `variant/thread_support=false`. That picks the `nothreads` template, which drops the `SharedArrayBuffer` requirement — so the build runs on any plain static host (GitHub Pages, itch.io, `python3 -m http.server`) with no cross-origin isolation headers. Turning threads on would require serving COOP/COEP headers.
+
+The web build works because the project already renders with **GL Compatibility**; Forward+ has no web target.
+
 The smoke test prints `ObjectDB instances leaked at exit` — one suspended coroutine caught by `quit()` mid-frame. It is a harness artifact, not a game bug: `godot --headless --quit-after 240` exits clean. Judge the run by the `smoke:` line and the exit code.
 
 `tests/smoke.tscn` is the only test. It instances `main.tscn` and drives the real components — doors, dialogue, the minigame's own `_gui_input` — rather than poking `GameState`, so it fails if any of the three contracts breaks. Run it after any change to the router, dialogue, or a search point. There is no linter or build script; export templates are not installed.
